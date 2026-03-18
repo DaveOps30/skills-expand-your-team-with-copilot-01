@@ -569,6 +569,15 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      <div class="share-section">
+        <span class="share-label">Share:</span>
+        <div class="share-buttons">
+          <button class="share-btn share-twitter" data-activity="${name}" title="Share on X (Twitter)" aria-label="Share on X (Twitter)">𝕏</button>
+          <button class="share-btn share-facebook" data-activity="${name}" title="Share on Facebook" aria-label="Share on Facebook">f</button>
+          <button class="share-btn share-whatsapp" data-activity="${name}" title="Share on WhatsApp" aria-label="Share on WhatsApp">💬</button>
+          <button class="share-btn share-copy" data-activity="${name}" title="Copy link" aria-label="Copy link to clipboard">🔗</button>
+        </div>
+      </div>
     `;
 
     // Add click handlers for delete buttons
@@ -587,7 +596,61 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // Add click handlers for share buttons
+    activityCard.querySelectorAll(".share-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        handleShare(e.currentTarget, name, details);
+      });
+    });
+
     activitiesList.appendChild(activityCard);
+  }
+
+  // Handle social sharing for an activity
+  function handleShare(button, name, details) {
+    const pageUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${pageUrl}?activity=${encodeURIComponent(name)}`;
+    const schedule = formatSchedule(details);
+    const shareText = `Check out "${name}" at Mergington High School! Schedule: ${schedule}`;
+
+    if (button.classList.contains("share-twitter")) {
+      window.open(
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } else if (button.classList.contains("share-facebook")) {
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } else if (button.classList.contains("share-whatsapp")) {
+      window.open(
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } else if (button.classList.contains("share-copy")) {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        const original = button.textContent;
+        button.textContent = "✓";
+        button.title = "Copied!";
+        button.setAttribute("aria-label", "Link copied!");
+        setTimeout(() => {
+          button.textContent = original;
+          button.title = "Copy link";
+          button.setAttribute("aria-label", "Copy link to clipboard");
+        }, 1500);
+      }).catch(() => {
+        button.title = "Copy failed";
+        button.setAttribute("aria-label", "Copy failed");
+        setTimeout(() => {
+          button.title = "Copy link";
+          button.setAttribute("aria-label", "Copy link to clipboard");
+        }, 1500);
+      });
+    }
   }
 
   // Event listeners for search and filter

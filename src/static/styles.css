@@ -476,6 +476,71 @@ footer {
   font-size: 0.8rem;
 }
 
+/* Social sharing section */
+.share-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+}
+
+.share-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.1s;
+  line-height: 1;
+}
+
+.share-btn:hover {
+  opacity: 0.85;
+  transform: scale(1.1);
+}
+
+.share-twitter {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.share-facebook {
+  background-color: #1877f2;
+  color: #ffffff;
+}
+
+.share-whatsapp {
+  background-color: #25d366;
+  color: #ffffff;
+  font-size: 0.8rem;
+}
+
+.share-copy {
+  background-color: var(--border);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}
+
 /* Search and Filter Components - Updated for Sidebar */
 .search-box {
   display: flex;
